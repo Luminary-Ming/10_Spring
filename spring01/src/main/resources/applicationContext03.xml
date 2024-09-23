@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--
+        通过静态工厂方式获取 User 对象
+        配置 bean 标签时，需要指定类中的静态方法，这样在 Spring 加载配置文件时，就能通过类名调用静态方法，最终返回需要的对象
+    -->
+    <bean id="user" class="com.demo.factory.StaticFactory" factory-method="getUser"/>
+
+    <!--
+        通过实例工厂获取 User 对象
+        1. 需要先配置实例工厂的 bean
+        2. 配置实例工厂返回的对象的 bean
+            factory-bean 引用实例工厂的 bean 对象
+            factory-method 实例工厂的 bean 对象中的方法
+    -->
+    <bean id="instanceFactory" class="com.demo.factory.InstanceFactory"/>
+    <bean id="user2" factory-bean="instanceFactory" factory-method="getUser"/>
+
+    <!--
+        通过自定义工厂获取 User 对象
+        配置当前工厂的 bean，并不是去创建 UserFactory 的对象，
+        而是通过 UserFactory 中的 getObject() 方法返回一个类的对象。
+        返回 User 对象：
+        public User getObject() throws Exception { return new User(); }
+    -->
+    <bean id="user3" class="com.demo.factory.UserFactory"/>
+</beans>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		https://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--
+        Spring 通过类中的无参构造创建并初始化一个类的对象：
+            Spring 的核心对象读取 bean 标签，并创建这个bean标签中配置的类的对象的时候，
+            默认情况下回去调用这个类的无参构造，如果没有无参构造，配置 bean 标签时就会提示错误。
+    -->
+    <bean id="orderDao" class="com.demo.dao.impl.OrderDaoImpl"/>
+
+    <bean id="userDao" class="com.demo.dao.impl.UserDaoImpl">
+        <!-- 给 UserDaoImpl 类中的有参构造传递数据 -->
+        <constructor-arg name="userName" value="亚索"/>
+        <constructor-arg name="age" value="20"/>
+        <constructor-arg name="sex" value="男"/>
+
+<!--    index属性：有参构造，参数列表的顺序值（位置、索引号）
+        <constructor-arg index="0" value="亚索"/>
+        <constructor-arg index="1" value="20"/>
+        <constructor-arg index="2" value="男"/>
+-->
+    </bean>
+
+    <bean id="user" class="com.demo.pojo.User"/>
+    <bean id="userDao2" class="com.demo.dao.impl.UserDaoImpl">
+        <!-- 给 UserDaoImpl 类中的有参构造传递 Spring 管理的对象 -->
+        <constructor-arg name="user" ref="user"/>
+    </bean>
+
+    <bean id="date" class="java.util.Date"/>
+    <bean id="order" class="com.demo.pojo.Order">
+        <!--
+            property 标签：使用类中的 SetXxx() 方法给类中的属性注入数据
+            property 标签中的 name 属性值是 SetXxx() 方法中的 Xxx（或xxx）值
+            如：SetPrice()  name的值就是 Price 或 price
+        -->
+        <property name="id" value="20240918"/>
+        <!-- 引用 Spring 管理的 date 对象 -->
+        <property name="orderTime" value="date"/>
+        <property name="price" value="999.99"/>
+    </bean>
+</beans>

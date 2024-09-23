@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--
+        Spring 的配置文件中每个 bean 标签关联的对象，默认情况下是单例的，
+        可以通过配置 scope 属性来修改当前 bean 的作用域：
+            scope="singleton" 设置当前类是单例，默认值，在 Spring 核心对象加载配置文件之前，对象就已经创建初始化完成了，
+                              当程序每次通过 Spring 的获取的 bean 都是同一个。
+            ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext04.xml");
+            scope="prototype" 设置当前类是多例，每次通过 Spring 的获取的 bean 对象都不相同。
+    -->
+    <bean id="user" class="com.demo.pojo.User" scope="prototype"/>
+
+    <!--
+        Spring 管理的类对象，可以指定对象在初始化和被销毁时候的方法
+            init-method 指定对象初始化时的方法
+            destroy-method 指定对象被销毁时的方法
+    -->
+    <bean id="user2" class="com.demo.pojo.User" init-method="init" destroy-method="destroy"/>
+
+</beans>
